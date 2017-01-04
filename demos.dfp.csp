@@ -1,0 +1,650 @@
+<dti:publication:set name="rg" />
+
+<script language="cache" runat="server">
+	
+	// Creat DFP parent var
+	new dfp
+	// Could use some validation:
+	set dfp("section") = $get(%request.Data("section", 1), "local") // Any section
+	set dfp("subcat") = $get(%request.Data("subcat", 1), "eugene") // Any cleaned subcat
+	set dfp("cmsid") = $get(%request.Data("cmsid", 1), -1) // Would be CMS ID
+	if ( dfp("cmsid") > 0 ){
+		set dfp("type") = $get(%request.Data("type", 1), "story")
+	} else {
+		set dfp("type") = $get(%request.Data("type", 1), "section")
+	}
+	
+	// Cleaning subcat strings
+	//set dfp("string") = "Eugene Water and Electric Board"
+	//set dfp("string") = $REPLACE($ZCONVERT(dfp("string"),"l")," ","_")
+	
+</script>
+
+<dti:section:set name='#(dfp("section"))#'>
+
+<script language="cache" runat="server">
+	
+	if (gSection.parentSectionID) {
+		set dfp("psection") = gSection.parentSectionID.getName()
+		set dfp("adunit") = dfp("psection") _ "/" _ dfp("section")
+	} else {
+		set dfp("adunit") = dfp("section")
+	}
+	
+</script>
+
+<!DOCTYPE HTML> 
+<html lang="en-us">
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8"> 
+		<title>RGM Test page</title> 
+		<style type="text/css" media="screen"> 
+		</style>
+		
+		<script src="http://static.registerguard.com/v5/bulldog/dist/1.0.0/20160317/1/js/preflight.min.js"></script>
+		
+		<!--[if (lt IE 9) & (!IEMobile 7)]>
+			<script src="http://static.registerguard.com/v5/bulldog/dist/1.0.0/20160317/1/js/html5shiv-printshiv.min.js"></script>
+			<link href="http://static.registerguard.com/respond-proxy.html" id="respond-proxy" rel="respond-proxy">
+			<link href="http://registerguard.com/respond.proxy.gif" id="respond-redirect" rel="respond-redirect">
+		<![endif]-->
+		
+		<link rel="stylesheet" href="http://static.registerguard.com/v5/bulldog/dist/1.0.0/20160317/1/css/bulldog.min.css">
+		
+		
+		<!-- ************************************************* -->
+		<!-- ************          DFP          ************** -->
+		<!-- ************************************************* -->
+		
+		<link rel="stylesheet" href="http://advertising.registerguard.com/assets/hosted/css/ads.css?v=20141020">
+		
+		<script async='async' src='https://www.googletagservices.com/tag/js/gpt.js'></script>
+		<script>
+			var googletag = googletag || {};
+			googletag.cmd = googletag.cmd || [];
+		</script>
+		
+		#("<")#script>
+			googletag.cmd.push(function() {
+				
+				var lmp = googletag.sizeMapping() // leaderboard mapping
+					.addSize([0, 0], [320, 50])
+					.addSize([1005, 100], [728, 90])
+					.build();
+					
+				var bmp = googletag.sizeMapping() //billboard mapping
+					.addSize([0, 0], [320, 50])
+					.addSize([665, 50], [640, 100])
+					.addSize([1005, 100], [970, 90])
+					.build();
+				
+				// Add ad units
+				googletag.defineSlot('/30582678/RGM/#(dfp("adunit"))#', [120, 60], 'ros-weather-widget')
+					.addService(googletag.pubads());
+				googletag.defineSlot('/30582678/RGM/#(dfp("adunit"))#', [[640, 100], [970, 90]], 'bd_banner-top')
+					.setSafeFrameConfig({allowPushExpansion: true})
+					.defineSizeMapping(bmp)
+					.setTargeting('pos', ['atf'])
+					.addService(googletag.pubads());
+				googletag.defineSlot('/30582678/RGM/#(dfp("adunit"))#', [[320, 50], [728, 90]], 'leaderboard-top')
+					.setTargeting('pos', ['atf'])
+					.defineSizeMapping(lmp)
+					.addService(googletag.pubads());
+				googletag.defineSlot('/30582678/RGM/#(dfp("adunit"))#', [[300, 600],[300, 250]], 'medium-rectangle-1')
+					.setTargeting('pos', ['atf','rgm_one'])
+					.addService(googletag.pubads());
+				googletag.defineSlot('/30582678/RGM/#(dfp("adunit"))#', [[300, 600],[300, 250]], 'medium-rectangle-2')
+					.setTargeting('pos', ['atf','rgm_two'])
+					.addService(googletag.pubads());
+				googletag.defineSlot('/30582678/RGM/#(dfp("adunit"))#', [300, 250], 'medium-rectangle-3')
+					.setTargeting('pos', ['btf','rgm_three'])
+					.addService(googletag.pubads());
+				googletag.defineSlot('/30582678/RGM/#(dfp("adunit"))#', [300, 100], 'homepage-block-1')
+					.setTargeting('pos', ['rgm_one'])
+					.addService(googletag.pubads());
+				googletag.defineSlot('/30582678/RGM/#(dfp("adunit"))#', [300, 100], 'homepage-block-2')
+					.setTargeting('pos', ['rgm_two'])
+					.addService(googletag.pubads());
+				googletag.defineSlot('/30582678/RGM/#(dfp("adunit"))#', [300, 100], 'homepage-block-3')
+					.setTargeting('pos', ['rgm_three'])
+					.addService(googletag.pubads());
+				googletag.defineSlot('/30582678/RGM/#(dfp("adunit"))#', [728, 90], 'leaderboard-bottom')
+					.setTargeting('pos', ['btf'])
+					.addService(googletag.pubads());
+				googletag.defineSlot('/30582678/RGM/#(dfp("adunit"))#', [300, 525], 'adicio-widget')
+					.setTargeting('rgm_subcat', ['rgm_adicio'])
+					.addService(googletag.pubads());
+				googletag.defineOutOfPageSlot('/30582678/RGM/#(dfp("adunit"))#', 'site-skin')
+					.addService(googletag.pubads());
+				
+				// Add page settings
+				<csp:if condition='dfp("cmsid") > 0'> <!-- Would test for $gStory -->
+					googletag.pubads().setTargeting('rgm_article_id','#(dfp("cmsid"))#');
+				</csp:if>
+				googletag.pubads().setTargeting('page_type','#(dfp("type"))#')
+				
+				<script language="cache" runat="server">
+					
+					; Create array for rgm_subcat
+					set dfp("subcatlist") = $LISTFROMSTRING(dfp("subcat"),",")
+					
+					set dfp("cleansubcatlist") = ""
+					
+					for i=1:1:$listlength(dfp("subcatlist")) {
+						
+						if ($listdata(dfp("subcatlist"), i)) {
+							
+							set dfp("cleansubcatlist") =  dfp("cleansubcatlist") _ "'" _ $list(dfp("subcatlist"), i) _ "',"
+							
+						}
+						
+					}
+					
+				</script>
+				
+				googletag.pubads().setTargeting('rgm_subcat',[#(dfp("cleansubcatlist"))#])
+				
+				// General stuff
+				googletag.pubads().enableSingleRequest();
+				googletag.pubads().collapseEmptyDivs();
+				googletag.enableServices();
+			});
+		</script>
+		
+		
+		<!-- ************************************************* -->
+		<!-- ************          /DFP         ************** -->
+		<!-- ************************************************* -->
+		
+		
+	</head>
+	
+	<body>
+		
+		<h3>Section: #(dfp("section"))# | Subcat: #(dfp("subcat"))# | CMS ID: #(dfp("cmsid"))# | Type: #(dfp("type"))#</h3>
+		
+		<hr>
+		
+		<h2>TEST 120x60</h2>
+		<div id='ros-weather-widget'>
+			<script>
+				googletag.cmd.push(function() { googletag.display('ros-weather-widget'); });
+			</script>
+		</div>
+		
+		<h2 id="billboard">TEST 970x90 ATF</h2>
+		<div id='bd_banner-top'><script>googletag.cmd.push(function() { googletag.display('bd_banner-top'); });</script></div>
+		
+		<br>
+		<br>
+		<br>
+		
+		<!--
+		<hr>
+		<hr>
+		<hr>
+		<hr>
+		<hr>
+		<hr>
+		
+		<h2>Billboard hard coded into page</h2>
+		<div class="mobile_banner mobile_banner_2x advert Aon Bon">
+			<div id="mobile_banner-top">
+				<a href="%%DEST_URL%%" target="_blank"><img alt="Oldfields" src="http://advertising.registerguard.com/media/creatives/flash/2016/12/26/640x100.png"></a>
+			</div>
+		</div>
+		
+		<div class="pushdown advert Con Don">
+			<div id="pushdown">
+				<div>
+					<object width="100%" height="100%" data="http://advertising.registerguard.com/assets/billboard/1.4/swf/Billboard.swf" type="application/x-shockwave-flash" name="bb20161226" id="bb20161226">
+						<param value="http://advertising.registerguard.com/assets/billboard/1.4/swf/Billboard.swf" name="movie">
+						<param value="always" name="allowScriptAccess">
+						<param value="false" name="menu">
+						<param value="http://advertising.registerguard.com/media/creatives/flash/2016/12/26/" name="base">
+						<param value="#FFF" name="bgcolor">
+						<param value="opaque" name="wmode">
+						<param value="tease=tease.swf&amp;ad=advert.swf&amp;height_closed=90&amp;height_open=415&amp;seconds=10&amp;clickTAG=%%DEST_URL_ESC%%" name="flashvars">
+						<a href="%%DEST_URL%%" target="_blank"><img alt="Oldfields" src="http://advertising.registerguard.com/media/creatives/flash/2016/12/26/tease.png"></a>
+					</object>
+				</div>
+			</div>
+		</div>
+		
+		<hr>
+		<hr>
+		<hr>
+		<hr>
+		<hr>
+		<hr>
+		-->
+		
+		<h2>TEST 728x90 ATF</h2>
+		<div id='leaderboard-top'>
+			<script>
+				googletag.cmd.push(function() { googletag.display('leaderboard-top'); });
+			</script>
+		</div>
+		
+		<h2>TEST 300x600</h2>
+		<div id='medium-rectangle-1'>
+			<script>
+				googletag.cmd.push(function() { googletag.display('medium-rectangle-1'); });
+			</script>
+		</div>
+		
+		<h2>TEST 300x250 ATF</h2>
+		<div id='medium-rectangle-2'>
+			<script>
+				googletag.cmd.push(function() { googletag.display('medium-rectangle-2'); });
+			</script>
+		</div>
+		
+		<h2>TEST 300x250 BTF</h2>
+		<div id='medium-rectangle-3'>
+			<script>
+				googletag.cmd.push(function() { googletag.display('medium-rectangle-3'); });
+			</script>
+		</div>
+		
+		<h2>TEST 300x100 1</h2>
+		<div id='homepage-block-1'>
+			<script>
+				googletag.cmd.push(function() { googletag.display('homepage-block-1'); });
+			</script>
+		</div>
+		
+		<h2>TEST 300x100 2</h2>
+		<div id='homepage-block-2'>
+			<script>
+				googletag.cmd.push(function() { googletag.display('homepage-block-2'); });
+			</script>
+		</div>
+		
+		<h2>TEST 300x100 3</h2>
+		<div id='homepage-block-3'>
+			<script>
+				googletag.cmd.push(function() { googletag.display('homepage-block-3'); });
+			</script>
+		</div>
+		
+		<h2>TEST 728x90 BTF</h2>
+		<div id='leaderboard-bottom'>
+			<script>
+				googletag.cmd.push(function() { googletag.display('leaderboard-bottom'); });
+			</script>
+		</div>
+		
+		<h2>TEST Image link ads</h2>
+		<code>
+			a href="https://pubads.g.doubleclick.net/gampad/jump?iu=30582678/RGM&sz=300x50&c=1234&dpt=1&pre=1&t=rgm_subcat%3Drgm_adicio_homes"
+				img src="https://pubads.g.doubleclick.net/gampad/ad?iu=30582678/RGM&sz=300x50&c=1234&dpt=1&pre=1&t=rgm_subcat%3Drgm_adicio_homes"
+			/a
+		</code>
+		<a href="https://pubads.g.doubleclick.net/gampad/jump?iu=30582678/RGM&sz=300x50&c=1234&dpt=1&pre=1&t=rgm_subcat%3Drgm_adicio_homes">
+			<img src="https://pubads.g.doubleclick.net/gampad/ad?iu=30582678/RGM&sz=300x50&c=1234&dpt=1&pre=1&t=rgm_subcat%3Drgm_adicio_homes">
+		</a>
+		
+		<hr>
+		
+		<h2 id="adicio">TEST Adicio widget</h2>
+		<div id='adicio-widget'>
+			<script>
+				googletag.cmd.push(function() { googletag.display('adicio-widget'); });
+			</script>
+		</div>
+		
+		<h2>Site skin</h2>
+		<div id='site-skin'>
+			<script>
+				googletag.cmd.push(function() { googletag.display('site-skin'); });
+			</script>
+		</div>
+		
+		<!-- [START] Brightcove HTML5 player -->
+		<h2>TEST VAST ad</h2>
+		<div style="display: block; position: relative; max-width: 600px;">
+			<div style="padding-top: 56.25%;">
+				<video
+					id="brightcove-5242191219001"
+					data-video-id="5242191219001"
+					data-account="4350897271001"
+					data-player="EJlsV6Ece"
+					data-embed="default"
+					class="video-js"
+					controls
+					style="width: 100%; height: 100%; position: absolute; top: 0px; bottom: 0px; right: 0px; left: 0px;">
+				</video>
+			</div>
+		</div>
+		
+		<script type="text/javascript">
+			// vanilla js version of $(document).ready() {
+			document.addEventListener("DOMContentLoaded", function() {
+				
+				var player;
+				
+				var ga_dimension1 = "Chris Pietsch",
+					ga_dimension2 = "35074759",
+					ga_dimension3 = "Dec 9, 2016 03:59PM",
+					ga_dimension4 = "http://registerguard.com/rg/video/35074759-319/life-football-and-bringin-the-juice.html.csp",
+					ga_dimension5 = "Life, football and bringin' the “juice!”",
+					ga_dimension6 = "38007",
+					ga_dimension7 = "Ducks Football Video";
+				
+				videojs("brightcove-5242191219001").ready(function() {
+					
+					player = this;
+					
+					// Set default volume
+					// See: https://docs.brightcove.com/en/perform/brightcove-player/guides/volume-control.html
+					player.volume(.5);
+					
+					console.log('adunit: #(dfp("adunit"))#');
+					console.log('cmsid: #(dfp("cmsid"))#');
+					console.log('subcat: #(dfp("subcat"))#');
+					#[ set dfp("vast") = "https://pubads.g.doubleclick.net/gampad/ads?sz=1280x720&iu=/30582678/RGM/" _ dfp("adunit") _ "&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=%5Breferrer_url%5D&description_url=%5Bdescription_url%5D&correlator=%5Btimestamp%5D&cust_params=rgm_article_id%3D" _ dfp("cmsid") _ "%26rgm_subcat%3D" _ dfp("subcat") ]#
+					console.log('vast: #(dfp("vast"))#');
+					
+					// IMA3 plugin
+					player.ima3({
+						
+						//serverUrl: "http://ox-d.registerguard.com/v/1.0/av?auid=538017796&c.s=video&c.c=home&tid=38007&tid=38&c.cms-id=35074759&dr=1",
+						serverUrl: 'https://pubads.g.doubleclick.net/gampad/ads?sz=1280x720&iu=/30582678/RGM&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=%5Breferrer_url%5D&description_url=%5Bdescription_url%5D&correlator=%5Btimestamp%5D',
+						//serverUrl: '#(dfp("vast"))#',
+						
+						prerollTimeout: 5000,
+						postrollTimeout: 5000,
+						loadingSpinner: true,
+						debug: false,
+						adTechOrder: ['html5']
+					});
+					
+					player.on('ads-load', function(event) {
+						console.log('ads loaded');
+						
+						// See: https://docs.brightcove.com/en/perform/brightcove-player/guides/ima-plugin.html#runtimesettings
+						// See: https://developers.google.com/interactive-media-ads/docs/sdks/html5/v3/apis#ima.AdsManager.setVolume
+						console.log(player.ima3.adsManager.getVolume());
+						player.ima3.adPlayer.volume(.5);
+						//player.ima3.adsManager.setVolume(.5);
+						console.log(player.ima3.adsManager.getVolume());
+					});
+					
+					// Send analytics on adstart
+					player.on('adstart', function(event) {
+						console.log('ad started');
+						//ga('send', 'event', 'video', 'videoAd', 'videoAd');
+						console.log(player.ima3.adsManager.getVolume());
+					});
+					
+					player.on('play', function(event) {
+						console.log('clicked play');
+						//ga('send', 'event', 'video', 'videoStart', 'videoStart');
+						//ga('send','pageview',{
+						//	'dimension1': ga_dimension1,
+						//	'dimension2': ga_dimension2,
+						//	'dimension3': ga_dimension3,
+						//	'dimension4': ga_dimension4,
+						//	'dimension5': ga_dimension5,
+						//	'dimension6': ga_dimension6,
+						//	'dimension7': ga_dimension7
+						//});
+					});
+					
+				});
+				
+			});
+			
+		</script>
+		<!-- Brightcove HTML5 JS -->
+		<script src="//players.brightcove.net/4350897271001/EJlsV6Ece_default/index.min.js"></script>
+		<!-- [END] Brightcove HTML5 player -->
+		
+		
+		<br>
+		
+		<h2>TEST slider ad</h2>
+		
+		<div style="max-width: 600px">
+			<!-- full01.csp -->
+				<div class="galleria" style="background-color:black;padding-top:67%;"></div><!-- /.galleria -->
+				
+				<div class="photo-info">
+					
+					<p><span class="gal-count"></span> <span class="caption gal-caption">&nbsp;</span></p>
+					
+					<div style="clear:both"></div>
+					
+				</div><!-- /.photo-info -->
+			<!-- /full01.csp -->
+		</div>
+		
+		<!-- slider01.csp -->
+			#("<")#script language="javascript">
+			
+				if (document.querySelector('.galleria')){
+					
+					// set ga for pageview call in slider02
+								
+					var galurl;
+					var galjson = [];
+					
+					galurl = "http://sandbox.registerguard.com/ssp/index.php?id=440";
+					
+				}
+				
+			</script>
+		<!-- /slider01.csp -->
+		
+		<script>if(!window.jQuery){document.write('<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"><\/script>');}</script>
+		<script>if(!window.jQuery){document.write('<script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.10.2.min.js"><\/script>');}</script>
+		<script src="http://static.registerguard.com/v5/bulldog/dist/1.0.0/20160317/1/js/bulldog.min.js"></script>
+		<!-- Galleria JS -->
+		<!-- slider02.csp -->
+			#("<")#script language="javascript">
+				var currentPCT;
+				//var galad = [];
+				
+				$( document ).ready(function() {
+					
+					if ($(".galleria").length){
+						
+						// Add ad unit for async
+						// See: https://docs.openx.com/Content/developers/ad_request_api/adtagguide_asynchjs.html
+						//_ox.addAdUnit('538001072'); // Section Slider Medium Rectangle 1
+						// .......................................................................................................................................................................................................................
+						
+						//googletag.cmd.push(function() {
+							
+							//galad[0] = googletag.defineSlot('/30582678/RGM/#(dfp("adunit"))#', [300, 250], 'ad-overlay-5').addService(googletag.pubads());
+							//
+							//googletag.defineSlot('/30582678/RGM/#(dfp("adunit"))#', [300, 250], 'ad-overlay-5').addService(googletag.pubads());
+							//
+							// googletag.pubads().enableSingleRequest();
+							// googletag.pubads().collapseEmptyDivs();
+							//googletag.enableServices();
+							
+						//});
+						
+						// .......................................................................................................................................................................................................................
+						
+						// start at 0, when initial image loads it count up to 1
+						var adCounter = 0;
+						
+						Galleria.configure({
+							// Set up for lazy loading images 10 at a time at bottom of .ready()
+							thumbnails: 'lazy'
+						});
+						
+						Galleria.ready(function(options) {
+							
+							this.addElement('ad-overlay');
+								// append it in
+								this.appendChild( 'container', 'ad-overlay' );
+								// add advert wrap div
+								this.addElement('advert');
+									this.appendChild('ad-overlay', 'advert');
+								
+							this.addElement('image-nav-ad','image-nav-left-ad','image-nav-right-ad');
+								this.appendChild('stage', 'image-nav-ad');
+									this.appendChild('image-nav-ad', 'image-nav-left-ad');
+									this.appendChild('image-nav-ad', 'image-nav-right-ad');
+									
+									$('.galleria-image-nav-left-ad, .galleria-image-nav-right-ad').click(function(){ 
+										$('.galleria-ad-overlay').fadeOut();
+										$('.galleria-image-nav-ad').fadeOut();
+										$('.galleria-advert').html('');
+										$('.photo-info').fadeIn();
+										//console.log('close ad - arrow');
+									});
+							
+							// Add the X to close on touch devices, .touch comes for free with Bulldog
+							if ($('.touch')[0]){
+								// add ad close button
+								this.addElement('ad-overlay-close')
+									this.appendChild('ad-overlay', 'ad-overlay-close');
+									// close button
+									$('.galleria-ad-overlay-close').html('<i class="fa fa-times"></i>').click(function(){ 
+										$('.galleria-ad-overlay').fadeOut();
+										$('.galleria-image-nav-ad').fadeOut();
+										$('.galleria-advert').html('');
+										$('.photo-info').fadeIn();
+										//console.log('close ad - X');
+									});
+							}
+							
+							this.bind('image', function(e) {
+								
+								adCounter++;
+								
+								// if the image index is divisible by 5, not including zero
+								if (adCounter % 5 == 0){
+									
+									var random = Math.random() * 10000000000000000;
+									console.log(random);
+									var id = "ad-overlay-" + random
+									console.log(id)
+									
+									adCounter = 0;
+									//console.log('reset');
+									
+									$('.galleria-ad-overlay').fadeIn();
+									
+									// add content div that will be have an id attached and targeted
+									//console.log(this);
+									this.addElement('ad-overlay-content');
+										// append element
+										this.appendChild('advert', 'ad-overlay-content');
+									// give it some style, remove an id if it has one, then give it an id
+									$('.galleria-ad-overlay-content').css('background','black').removeAttr('id').attr('id',id);
+									
+									
+									
+									// .......................................................................................................................................................................................................................
+									// Get ads async
+									//_ox.setAdUnitSlotId('538001072', 'ad-overlay-5');
+									//_ox.load();
+									
+									//googletag.cmd.push(function() { googletag.display('ad-overlay-5'); });
+									//if (adCounter = 5) {
+									//	googletag.cmd.push(function() { googletag.display('ad-overlay-5'); });
+									//} else {
+									//	googletag.cmd.push(function() { googletag.display('ad-overlay-5'); });
+									//	googletag.cmd.push(function() { googletag.pubads.refresh([galad[0]]); });
+									//}
+									googletag.cmd.push(function() {
+										googletag.defineSlot('/30582678/RGM', [300, 250], id)
+											.addService(googletag.pubads())
+										googletag.enableServices();
+										googletag.display(id);
+									});
+									// .......................................................................................................................................................................................................................
+									
+									
+									
+									
+									$('galleria-advert').find("iframe").css('width','auto!important').css('max-height','250px');
+									$('.photo-info').fadeOut();
+									$('.galleria-image-nav-ad').fadeIn();
+									//console.log('show ad');
+									
+								}
+								
+								//console.log(adCounter)
+								var currentIndex = this.getIndex()
+								currentPCT = this.getData(currentIndex).byline;
+								//console.log("currentPCT set");
+								
+								if (e.index > 0){
+									console.log('send ga pageview');
+									//ga('send','pageview',{
+									//	'dimension1': ga_dimension1,
+									//	'dimension2': ga_dimension2,
+									//	'dimension3': ga_dimension3,
+									//	'dimension4': 'http://registerguard.com' + ga_dimension4,
+									//	'dimension5': ga_dimension5,
+									//	'dimension6': ga_dimension6,
+									//	'dimension7': ga_dimension7,
+									//	'dimension8': currentPCT
+									//});
+									
+								}
+								
+								console.log("count: " + count + ", adcounter: " + adCounter);
+								
+							}); //close bind to image
+							
+							// Lazy load 10 images at a time on load
+							this.lazyLoadChunks(3);
+							
+						});
+						
+						// Load theme
+						//Galleria.loadTheme('http://uploads.registerguard.com/scratch/galleria/themes/rg/galleria.rg.js');
+						
+						// IF SSP XML URL
+						if (galurl) {
+							//console.log('galurl: ' + galurl);
+							$.getJSON(galurl, function(galajax){
+								//console.log("galajax: " + galajax);
+								if(galjson[0]){
+									//console.log('galjson: ' + galjson);
+									var newjson = galjson.concat(galajax);
+									Galleria.run('.galleria', {
+										dataSource: newjson
+									});
+								} else {
+									//console.log("else");
+									Galleria.run('.galleria', {
+										dataSource: galajax
+									});
+								}
+							});	
+						} else {
+							//console.log('galjson: ' + galjson);
+							//console.log("galjson: " + galjson);
+							//Galleria.run('.galleria');
+							Galleria.run('.galleria', {
+								dataSource: galjson
+							});
+						}
+						
+					}
+					
+				});
+			</script>
+		<!-- /slider02.csp -->
+		
+		<!-- [BEGIN] Analytics -->
+		<!-- Needed for bulldog.min.js -->
+		<script>(function(r,g,n,e,w,s){r.GoogleAnalyticsObject=e;r[e]||(r[e]=function(){(r[e].q=r[e].q||[]).push(arguments)});r[e].l=+new Date;w=g.createElement(n);s=g.getElementsByTagName(n)[0];w.src='//www.google-analytics.com/analytics.js';s.parentNode.insertBefore(w,s)}(window,document,'script','ga'));ga('create','UA-882065-1','registerguard.com');ga('require','displayfeatures');ga('require','linkid','linkid.js');ga('send','pageview');</script>
+		<!-- [END] Analytics -->
+		
+	</body>
+
+</html>
+
+</dti:section:set>
+
+#[ kill dfp ]#
