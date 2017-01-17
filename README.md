@@ -95,8 +95,24 @@ John handled a lot of the secondary and third parties while I nailed down expand
 
 Thankfully, DFP tagging allowed for a lot of simplification in the main news site. There's still a lot of logic but it's about half as bad as it was. See example files for more.
 
+### Other issues of note
 
+#### Expanding billboard
 
+I took the image expanding billboards that OS4 gave us and created custom HTML5 expanding billboards. There are two elements.
+
+1. Adobe Animate templates that Melissa created and are used to create independent collapsed and expanded billboards
+1. DFP custom creative template that basically just takes two iframe src paths and toggles between the two.
+
+See /expanding-html5-billboard/README.md or the [original issue](https://github.com/registerguard/tracker/issues/618#issuecomment-271459921) for more.
+
+#### MailChimp ads
+
+Ugh. These are turning out to be a real pain. You can read the full story here: https://github.com/registerguard/tracker/issues/618#issuecomment-271989015
+
+The short version is that MailChimp and DFP don't play well with each other. 
+
+I tried several things to try and get the ad URLs to click through successfully but had little luck. I currently have open support tickets with MailChimp and OS4 but I'm not confident they will return anything worthwhile. If worse comes to worst, I may try a really hacky solution I saw on a [Google Group](https://productforums.google.com/d/msg/dfp/sKydukOsXpQ/pjV4DMEOBgAJ) and a related [StackOverflow answer](http://stackoverflow.com/questions/12697866/google-dfp-ads-in-email-behaving-strangely/16764513#16764513). Instead of having the href go to DFP, have it go to a PHP page hosted by us that redirects to the DFP page from a URL param. I know, janky at best, but it may be our last chance. Also, THIS WILL ONLY WORK IF THE ADS ARE CONSISTANT AND DO NO CHANGE.
 
 More to come...
 

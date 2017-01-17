@@ -1,0 +1,250 @@
+<!-- NOTE -->
+<!-- THIS COPY OF THE DFP CUSTOM TEMPLATE WAS COPIED -->
+<!-- ON 1/13 FROM http://bit.ly/2j2uSyj SO YOU NEED  -->
+<!-- TO CHECK IF TEMPLATE HAS BEEN UPDATED           -->
+
+<script>
+	
+	// Set vars
+	var widthEXPoas = '970px';
+	var expandIFoas = '415px';
+	var collapseIFoas = '90px';
+	var enableExpnOpt = 'false';
+	var url = '%%CLICK_URL_ESC%%[%ClickthroughURL%]';
+	var date = '[%Date%]';
+	
+	if (enableExpnOpt == 'true') {
+		changeClikOpt = "onmouseover='handleClick(); return false;'";
+	} else { 
+		changeClikOpt = "onClick='handleClick(); return false;'";
+	};
+	
+	// Used w/ cookie
+	function setState(state) {
+		
+		if (pushdownON == 1) {
+			var heightIFoas = expandIFoas;
+			handleShow();
+		} else { 
+			var heightIFoas = collapseIFoas;
+			handleClose();
+		}
+		
+		return heightIFoas;
+		
+	}	
+	
+	// Show collapsed ad
+	function handleClose(){
+		
+		var billboard = document.getElementById('adUnit');
+		var billboard_If = getElement(whichId());
+		var show = document.getElementById("showButton");
+		show.innerHTML = "<img id='showButton' src='http://advertising.registerguard.com/assets/billboard/buttons/button-open.png' />";
+		show.style.float = "right";
+		show.style.position = "absolute";
+		show.style.width = "56px";
+		show.style.height = "15px";
+		show.style.bottom = "8px";
+		show.style.right = "15px";
+		show.style.display = "block";
+		billboard.style.width = widthEXPoas;
+		billboard.style.height = collapseIFoas;
+		billboard.style.display = "block";
+		billboard.innerHTML = "<iframe id='rgm_teaser' src='http://advertising.registerguard.com/media/creatives/flash/" + date + "/tease.html?link=" + url + "' width='970px' height='90px' frameborder='0'>";
+		
+		billboard_If.height = collapseIFoas;
+		billboard_If.style.height = collapseIFoas;
+		
+	};
+	
+	// Show expanded ad
+	function handleShow(){
+		
+		var billboard = document.getElementById('adUnit');
+		var billboard_If = getElement(whichId());
+		var show = document.getElementById("showButton");
+		show.innerHTML = "<img id='showButton' src='http://advertising.registerguard.com/assets/billboard/buttons/button-close.png' />";
+		show.style.float = "right";
+		show.style.width = "56px";
+		show.style.height = "15px";
+		show.style.bottom = "8px";
+		show.style.right = "15px";
+		show.style.position = "absolute";
+		show.style.display = "block";
+		billboard.style.display = "block";
+		billboard.style.width = widthEXPoas;
+		billboard.style.height = expandIFoas;
+		billboard.innerHTML = "<iframe id='rgm_billboard' src='http://advertising.registerguard.com/media/creatives/flash/" + date + "/advert.html?link=" + url + "' width='970px' height='415px' frameborder='0'>";
+		
+		billboard_If.style.transitionProperty = "height";
+		billboard_If.style.transitionDuration = "0.5s";	
+		billboard_If.style.height = expandIFoas;
+		billboard_If.height = expandIFoas;
+		
+		
+	};
+	
+	// Handle open/close
+	function handleClick(){
+		
+		if(document.getElementById('adUnit').style.height == '415px'){
+			handleClose();
+		} else {
+			handleShow(); 
+		}
+		
+	}
+	
+	// 
+	function adjustMyFrameHeight(iframe){
+		
+		// See: https://github.com/registerguard/tracker/issues/618#issuecomment-271459921
+		if (!!window.CanvasRenderingContext2D){
+			var frame = getElement(whichId());
+			frame.height = setState(); // add 60 pixels to be safe...
+		} else {
+			//document.write("Your browser does not support HTML5 ads.");
+			var billboard = document.getElementById('adUnit');
+			billboard.innerHTML = "" + 
+				"<a href='" + url + "' target='_blank'>" +
+					"<img src='http://advertising.registerguard.com/media/creatives/flash/" + date + "/backup.jpg' width='970px' height='90px'>" +
+				"</a>" +
+			"";
+		}
+		
+	}
+	
+	// Get parent (ad iframe) id
+	function whichId(){
+		
+		var iframes=parent.document.getElementsByTagName('iframe'), ifr, i=0, id=null;
+		
+		while(ifr=iframes[i++]){
+			if(ifr.contentWindow == this){id=ifr.id;break}
+		}
+		
+		return id;
+		
+	}
+	
+	// Get parent (ad iframe) element by id
+	function getElement(aID){
+		return (document.getElementById) ? parent.document.getElementById(aID) : parent.document.all[aID];
+	}
+	
+	// timer
+	function pushTimer() {
+		setTimeout(function(){ handleClose() }, 10000);
+	}
+	
+	// open link
+	function openLink(){
+		//console.log('openLink()');
+		//window.open('%%CLICK_URL_UNESC%%', '_blank');
+		window.open(url, '_blank');
+	}
+	
+	// Cookies
+	function setCookie(cname, cvalue, exdays) {
+		
+		var d = new Date();
+		d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+		var expires = "expires="+d.toUTCString();
+		document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+		
+	}
+	
+	function getCookie(cname) {
+		
+		var name = cname + "=";
+		var ca = document.cookie.split(';');
+		for(var i = 0; i < ca.length; i++) {
+			var c = ca[i];
+			while (c.charAt(0) == ' ') {
+				c = c.substring(1);
+			}
+			if (c.indexOf(name) == 0) {
+				return c.substring(name.length, c.length);
+			}
+		}
+		
+		return "";
+		
+	}
+	
+	function checkCookie() {
+		var user = getCookie("pushdown_dfpp");
+		if (user != "") {
+			
+			pushdownON = 0;
+			
+		} else {
+			user = 1;
+			pushdownON = 1;
+			pushTimer(); 
+			setCookie("pushdown_dfpp", user, 1);
+			
+		}
+	}
+	
+	window.onload = checkCookie();
+	
+</script>
+
+<body onLoad="adjustMyFrameHeight();">
+
+	<div id="centerDFPpush">
+	
+		<div id="showButton" onClick="handleClick(); return false;"></div>
+	
+		<div id="adUnit"></div>
+	
+	</div>
+
+	<script>
+		
+		// Var css
+		var cssDFP_Inter = "" + 
+			"#videoDFPpush {" + 
+				"margin-top: 23px;" + 
+				"margin-left:23px;" + 
+				"width:350px;" + 
+				"height:200px;" + 
+				"position:absolute;" + 
+				"z-index:9999998;" + 
+				"display:inline;" + 
+			"}" + 
+			"#adUnit {" + 
+				"background-repeat:no-repeat;" + 
+				"z-index:9999996;" + 
+			"}" + 
+			"#clickDFPbig {" + 
+				"width: " + widthEXPoas + ";" + 
+				"height: " + expandIFoas + ";" + 
+				"position:absolute;z-index:9999997;" + 
+			"}" + 
+			"#centerDFPpush {" + 
+				"width: " + widthEXPoas + ";" + 
+				"z-index:9999995;" + 
+			"}" + 
+			"#showButton {" + 
+				"z-index:9999999;" + 
+				"right:0px;" + 
+				"cursor:pointer;" + 
+			"}" + 
+		"";
+		
+		// create css style
+		var style_sheetInter = document.createElement('style');
+		style_sheetInter.setAttribute('type', 'text/css');
+		var cstrInter = ''+cssDFP_Inter+'';
+		var rulesInter = document.createTextNode(cstrInter);
+		style_sheetInter.appendChild(rulesInter);
+		
+		var headInter_DFP = document.getElementById('centerDFPpush');
+		headInter_DFP.appendChild(style_sheetInter);
+		
+	</script>
+	
+</body>
