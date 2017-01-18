@@ -1,0 +1,54 @@
+<!-- JUST FOR TESTING -->
+<style>
+	
+	html, body {
+		margin: 0;
+		padding: 0;
+	}
+	
+</style>
+
+
+<!-- COPY BELOW FOR DFP -->
+
+<div style="position:relative;">
+	<video width="300" height="250" autoplay="autoplay" controls="" muted="true" class="embed" id="video-1234" style="background:black">
+		<source src="http://advertising.registerguard.com/media/creatives/video/2017/01/18/ABTS.mp4" type="video/mp4">
+		<img src="http://advertising.registerguard.com/media/creatives/video/2017/01/18/ABTS(300x250).png" width="100%">
+		Your browser does not support the HTML5 video tag.
+	</video>
+	
+	<a href="http://registerguard.com" id="overlay-1234" target="_blank" style="margin:0 auto;"></a>
+	
+	<script>if(!window.jQuery){document.write('<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"><\/script>');}</script>
+	
+	<script>
+		document.addEventListener("DOMContentLoaded", function(event) {
+			var advideo = true, overlay = $('#overlay-1234'), video = $('#video-1234'), img = video.children("img");
+			// See: http://stackoverflow.com/a/11717944/3784241
+			// Get parent html to see if it has class of touch
+			if ($('html', window.parent.document).hasClass('touch')) {
+				$(video).replaceWith(img);
+				advideo = false;
+			}
+			if (advideo == true){
+				overlay.css({'position': 'absolute', 'top': '0px', 'left': '0px', 'width': video.width() + 'px', 'height': (video.height() - 40) + 'px',});
+			} else {
+				overlay.css({'position': 'absolute', 'top': '0px', 'left': '0px', 'width': '100%', 'min-height': '250px', 'height': img.height() + 'px',});
+			}
+			
+			var parenthtml = $('html', window.parent.document).hasClass('touch');
+			
+			console.log(parenthtml);
+			
+			// var html = $(iframe);
+			// console.log("robbyd");
+			// console.log(html);
+			
+		});
+		
+	</script>
+</div>
+
+<script>console.log("RD - Edit URL good");</script>
+
