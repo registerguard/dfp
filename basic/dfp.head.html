@@ -1,0 +1,46 @@
+<!-- ************************************************* -->
+<!-- ************          DFP          ************** -->
+<!-- ************************************************* -->
+	
+	<link rel="stylesheet" href="http://advertising.registerguard.com/assets/hosted/css/ads.css?v=20141020">
+	
+	<script async='async' src='https://www.googletagservices.com/tag/js/gpt.js'></script>
+	<script>
+		var googletag = googletag || {};
+		googletag.cmd = googletag.cmd || [];
+	</script>
+	
+	<script>
+		
+		googletag.cmd.push(function() {
+			
+			// Set up size mapping
+			var mapping = googletag.sizeMapping()
+				.addSize([0, 0], [320, 50]) // Default banner is mobile banner (320x50)
+				.addSize([1005, 100], [728, 90]) // On C breakpoint (>1005px) show desktop banner (728x90)
+				.build();
+			
+			googletag.defineSlot('/30582678/RGM/', [[320, 50], [728, 90]], 'leaderboard-top')
+				.setTargeting('pos', ['atf'])
+				.defineSizeMapping(mapping)
+				.addService(googletag.pubads());
+			googletag.defineSlot('/30582678/RGM/', [300, 250], 'medium-rectangle-1')
+				.setTargeting('pos', ['atf','rgm_one'])
+				.addService(googletag.pubads());
+			
+			// KVPs
+			googletag.pubads().setTargeting('rgm_subcat',['anniversary'])
+			googletag.pubads().setTargeting('page-type','article');
+			
+			// General stuff
+			googletag.pubads().enableSingleRequest();
+			googletag.pubads().collapseEmptyDivs();
+			googletag.enableServices();
+			
+		});
+		
+	</script>
+	
+<!-- ************************************************* -->
+<!-- ************          /DFP         ************** -->
+<!-- ************************************************* -->
