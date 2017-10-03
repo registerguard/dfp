@@ -1,0 +1,66 @@
+<html>
+<head>
+<title>LaneCountyHomeShow970x90_ListedSisters_093017</title>
+<meta charset="UTF-8">
+	
+	<style>
+		html, body{
+			margin: 0;
+			padding: 0;
+			background-color: #FFFFFF;
+		}
+		#click{
+			position: absolute;
+			top: 0px;
+			left: 0px;
+			-moz-user-select: none;
+			-webkit-user-select: none;
+			-ms-user-select: none;
+			 user-select: none;
+			-webkit-tap-highlight-color: rgba(0,0,0,0);
+			cursor: pointer;
+		}
+		#border{
+			position: absolute;
+			left: 0px;
+			top: 0px;
+			width: calc(970px - 2px);
+			height: calc(90px - 2px);
+			border: 1px solid #CCCCCC;
+			pointer-events: none;
+		}
+	</style>
+	
+	<script>
+		var link = "";
+		//console.log(window.location);
+		var url = window.location.search.substring(1); //get rid of "?" in querystring
+		//console.log(url);
+		var qArray = url.split('&'); //get key-value pairs
+		for (var i = 0; i < qArray.length; i++) {
+			//console.log(i + ': ' + qArray);
+			var pArr = qArray[i].split('='); //split key and value
+			if (pArr[0] == 'link') {
+				//console.log(pArr[1]);
+				link = pArr[1];
+				//return pArr[1]; //return value
+			}
+		}
+		document.addEventListener("DOMContentLoaded", function() {
+			console.log("link: " + link)
+			var clickwrapper = document.getElementById('click');
+			clickwrapper.setAttribute('href',link);
+		});
+		
+	</script>
+	
+</head>
+<body bgcolor="#FFFFFF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+	<div id="animation_container" style="background-color:rgba(255, 255, 255, 1.00); width:970px; height:90px; overflow: hidden;">
+		<a id="click" target="_blank">
+			<img src="LaneCountyHomeShow970x90_ListedSisters_093017.gif" width="970" height="90" alt="">
+		</a>
+	</div>
+	<div id="border"></div>
+</body>
+</html>

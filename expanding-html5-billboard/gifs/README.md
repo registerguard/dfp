@@ -1,0 +1,3 @@
+The Animate templates are not working anymore and Melissa had to scramble to find a fix. The solution was to create gifs and use those in the expanding billboard position. But the simple files she created were not working as expected. Specifically the clickthroughs didn't work and there were scroll bars.
+
+It took me a while but I finally remembered that the clickthroughs are set via the URL parameter. I created these two files for her creatives. 
