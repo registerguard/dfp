@@ -39,11 +39,13 @@ When a user visits a page with an expanding billboard here are the steps that oc
 
 ### Click event
 
-In order to get click throughs to work, the default Animate template and DFP templates needed to be modified. This is because the click events are handled inside the creative iframes and not in the DFP parent iframe. In order to pass the Clickthrough URL from the DFP parent iframe to the creative children iframes I set a JS variable in the DFP template the an escaped version of the Clickthrough URL variable.
+In order to get click throughs to work, the default Animate template and DFP templates needed to be modified. This is because the click events are handled inside the creative iframes and not in the DFP parent iframe. In order to pass the Clickthrough URL from the DFP parent iframe to the creative children iframes, I set a JS variable in the DFP template the an escaped version of the Clickthrough URL variable.
 
 ```js
 ...
-var url = '%%CLICK_URL_ESC%%[%ClickthroughURL%]';
+var clickthrough = '[%ClickthroughURL%]';
+clickthrough = encodeURIComponent(clickthrough); // Must escape to save UTM codes
+var url = '%%CLICK_URL_ESC%%' + clickthrough;
 ...
 ```
 

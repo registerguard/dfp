@@ -1,7 +1,3 @@
-<!-- WORKING VERSION OF PUSHDOWN TEMPLATE -->
-<!-- Updated 11/2/17 10:18 a.m. to http://bit.ly/2lCx1Gs -->
-<!-- Please check to see if there have been any changes in DFP -->
-
 <script>
 	
 	// Set vars
@@ -9,36 +5,19 @@
 	var expandIFoas = '415px';
 	var collapseIFoas = '90px';
 	var enableExpnOpt = 'false';
-
-	// ---
-
-	var clickthrough = '[%ClickthroughURL%]';
-	//console.log('clickthrough: ' + clickthrough);
-	// https://eugenehomeshow.com/our-shows/lane-county-home-improvement-show/?utm_source=registerguard.com&utm_medium=billboard_970x90&utm_campaign=Lane%20County%20Home%20Improvement%20Show&utm_content=35th_home_improvement_show
-	// --- 
-	clickthrough = encodeURIComponent(clickthrough);
-	//console.log('encoded clickthrough: ' + clickthrough);
-	// https%3A%2F%2Feugenehomeshow.com%2Four-shows%2Flane-county-home-improvement-show%2F%3Futm_source%3Dregisterguard.com%26utm_medium%3Dbillboard_970x90%26utm_campaign%3DLane%2520County%2520Home%2520Improvement%2520Show%26utm_content%3D35th_home_improvement_show
-	// --- 
-	var url = '%%CLICK_URL_ESC%%' + clickthrough;
-	//console.log('url: ' + url);
-	// http://adclick.g.doubleclick.net/aclk%253Fsa%253Dl%2526ai%253DCAgP_sFv6WY2xCYu0kwOo8YzoBAEAexABILlgKASIAQGQAQDAAQLIAQngAgGoAwGqBFZP0BYQrC4HoIwzSVjJb3T6VV0BmCu45iMc2KK897m3eUJjHuvykQ5fPacmyck2F1KSTOF41FtOPWNru0aanmWiEQzuqRhIcrTGfYde-KjeGMul3DeAJ7gEAaAGH9gHANIIBQiAYRAB%2526preview%253D%2526num%253D1%2526sig%253DAOD64_3IadQakuZae0W09OSPk5dI_QGQfA%2526client%253Dca-pub-1979380922137305%2526adurl%253Dhttps%3A%2F%2Feugenehomeshow.com%2Four-shows%2Flane-county-home-improvement-show%2F%3Futm_source%3Dregisterguard.com%26utm_medium%3Dbillboard_970x90%26utm_campaign%3DLane%2520County%2520Home%2520Improvement%2520Show%26utm_content%3D35th_home_improvement_show
-	// ---
+	var url = '%%CLICK_URL_ESC%%[%ClickthroughURL%]';
 	var teaseurl = '[%970x90URL%]';
-	//console.log('tease: ')
-	//console.log(teaseurl + url);
-	// 
-	// ---
 	var adverturl = '[%970x415URL%]';
-	//console.log('advert: ');
-	//console.log(adverturl + url);
-	// 
-	// ---
 	var backupurl = '[%970x90imgURL%]';
-	//console.log('backup: ');
-	//console.log(backupurl + url);
 
-	// ---
+console.log("url: [%ClickthroughURL%]");
+console.log("escaped url: %%CLICK_URL_ESC%%[%ClickthroughURL%]");
+console.log("tease url:");
+console.log(teaseurl + "?link=" + url );
+console.log("advert url:");
+console.log(adverturl + "?link=" + url);
+//console.log("adverturl: [%970x415URL%]");
+//console.log("backupurl: [%970x90imgURL%]");
 	
 	if (enableExpnOpt == 'true') {
 		changeClikOpt = "onmouseover='handleClick(); return false;'";

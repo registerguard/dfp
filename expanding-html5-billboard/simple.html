@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <title>This is a simple example</title>
+    </head>
+    <body>
+        <div id="stuff"></div>
+        <script>
+            
+
+            // This part takes place in the DFP creative template
+            var link = '';
+            // This should be escaped because it gets passed via link=... in the iFrame URL
+            // See: https://support.google.com/dfp_premium/answer/6081628?hl=en
+            var dfpEsc = 'http://adclick.g.doubleclick.net/aclk%253Fsa%253Dl%2526ai%253DCAgP_sFv6WY2xCYu0kwOo8YzoBAEAexABILlgKASIAQGQAQDAAQLIAQngAgGoAwGqBFZP0BYQrC4HoIwzSVjJb3T6VV0BmCu45iMc2KK897m3eUJjHuvykQ5fPacmyck2F1KSTOF41FtOPWNru0aanmWiEQzuqRhIcrTGfYde-KjeGMul3DeAJ7gEAaAGH9gHANIIBQiAYRAB%2526preview%253D%2526num%253D1%2526sig%253DAOD64_3IadQakuZae0W09OSPk5dI_QGQfA%2526client%253Dca-pub-1979380922137305%2526adurl%253D';
+            // This URL is not encoded but it should be
+            var clickthrough = 'https://eugenehomeshow.com/our-shows/lane-county-home-improvement-show/?utm_source=registerguard.com&utm_medium=billboard_970x90&utm_campaign=Lane%20County%20Home%20Improvement%20Show&utm_content=35th_home_improvement_show';
+            // This is how we encode it
+            clickthrough = encodeURIComponent(clickthrough);
+            console.log(clickthrough);
+            // Then we combine them
+            link = dfpEsc + clickthrough;
+            console.log(link); // This link clicks through correctly
+            
+            // ---
+
+            // Then we call an iFrame with link on the end of the URL
+            //var url = window.location.search.substring(1); //get rid of "?" in querystring
+            // Change this to query for clarity
+            var query = window.location.search.substring(1); //get rid of "?" in querystring
+            // Split on pairs just in case there is more than one, I don't know of any instance when this might happen
+            var queryArray = query.split('&'); //get key-value pairs
+            // loop over pairs
+            for (var i = 0; i < queryArray.length; i++) {
+                //console.log(i + ': ' + qArray);
+                // split pairs on "="
+                var pair = queryArray[i].split('='); //split key and value
+                // if the key of the pair is link (this should be the only pair)
+                if (pair[0] == 'link') {
+                    //console.log(pArr[1]);
+                    // Get the escaped URL, I don't even think this needs to get decoded, but that needs to be tested
+                    link = pair[1];
+                }
+            }
+
+        </script>
+    </body>
+</html>

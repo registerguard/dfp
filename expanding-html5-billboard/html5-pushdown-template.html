@@ -1,7 +1,6 @@
 ﻿<!-- NOTE -->
-<!-- THIS IS THE FILE PROVIDED TO MELISSA ON 1/13 BUT -->
-<!-- MAY HAVE BEEN CHANGED SINCE THEN. PLEASE CONTACT -->
-<!-- MELISSA FOR UPDATED VERSION                      -->
+<!-- This file is out of sync with Melissa's template -->
+<!-- This is my best guess for how it should work -->
 
 <!DOCTYPE html>
 <!--
@@ -74,16 +73,15 @@
 
 		var link = "";
 		//console.log(window.location);
-		var url = window.location.search.substring(1); //get rid of "?" in querystring
-		//console.log(url);
-		var qArray = url.split('&'); //get key-value pairs
-		for (var i = 0; i < qArray.length; i++) {
-			//console.log(i + ': ' + qArray);
-			var pArr = qArray[i].split('='); //split key and value
-			if (pArr[0] == 'link') {
-				//console.log(pArr[1]);
-				link = pArr[1];
-				//return pArr[1]; //return value
+		var query = window.location.search.substring(1); //get rid of "?" in querystring
+		//console.log(query);
+		var queryArray = query.split('&'); //get key-value pairs
+		for (var i = 0; i < queryArray.length; i++) {
+			//console.log(i + ': ' + queryArray);
+			var pair = queryArray[i].split('='); //split key and value
+			if (pair[0] == 'link') {
+				//console.log(pair[1]);
+				link = pair[1];
 			}
 		}
 		
